@@ -11,6 +11,7 @@
     "server": "json-server --watch src/data/db.json --port 8000"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
     "@nextui-org/react": "^2.4.8",
     "@reduxjs/toolkit": "^2.3.0",
     "framer-motion": "^11.11.11",
