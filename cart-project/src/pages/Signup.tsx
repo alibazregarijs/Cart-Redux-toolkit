@@ -61,7 +61,7 @@ export default function Signup() {
                 }}
               />
               {errors.email && (
-                <p className="text-red-500">{`${errors.email.message}`}</p>
+                <p className="text-red-500 text-left">{`${errors.email.message}`}</p>
               )}
               <Input
                 {...register("username")}
@@ -73,7 +73,7 @@ export default function Signup() {
                 }}
               />
               {errors.username && (
-                <p className="text-red-500">{`${errors.username.message}`}</p>
+                <p className="text-red-500 text-left">{`${errors.username.message}`}</p>
               )}
               <Input
                 {...register("password")}
@@ -85,7 +85,7 @@ export default function Signup() {
                 }}
               />
               {errors.password && (
-                <p className="text-red-500">{`${errors.password.message}`}</p>
+                <p className="text-red-500 text-left">{`${errors.password.message}`}</p>
               )}
               <Input
                 {...register("confirmPassword")}
@@ -98,7 +98,7 @@ export default function Signup() {
                 
               />
               {errors.confirmPassword && (
-                <p className="text-red-500">{`${errors.confirmPassword.message}`}</p>
+                <p className="text-red-500 text-left">{`${errors.confirmPassword.message}`}</p>
               )}
               <div>
                 <Button
