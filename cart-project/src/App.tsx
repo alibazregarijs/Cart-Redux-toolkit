@@ -1,9 +1,12 @@
-import {Button} from "@nextui-org/react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "./pages/Login";
 
 export default function App() {
   return (
-    <Button color="primary">
-      Button
-    </Button>
+    <BrowserRouter basename="/">
+      <Routes>
+        <Route path="/" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

@@ -1,15 +1,22 @@
-// tailwind.config.js
 const { nextui } = require("@nextui-org/react");
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
-    // ...
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundColor: {
+        mainColor: "#FBF8F9",
+        secondaryColor: "#F0F0F0",
+        blackOverlay: "rgba(0, 0 ,0 ,0.7)",
+        blackOverlaySection: "rgba(0, 0 ,0 ,0.6)",
+        blackOverlayBackground: "rgba(0, 0 ,0 ,0.3)",
+      },
+    },
   },
-  darkMode: "class",
-  plugins: [nextui()]
-}
+  plugins: [nextui()],
+};
