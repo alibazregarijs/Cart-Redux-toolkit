@@ -48,7 +48,7 @@ export default function Signup() {
             <Input
               type="password"
               variant="underlined"
-              label="Password"
+              label="Confirm Password"
               classNames={{
                 input: ["!text-white"],
               }}
