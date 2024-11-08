@@ -4,6 +4,7 @@
       "id": "1",
       "title": "Headphones",
       "countOfSell": 1,
+      "img": "src/public/images/headphone.jpg",
       "CountOfviews": 3,
       "price": 350,
       "quantityInStore": 5
@@ -11,6 +12,7 @@
     {
       "id": "2",
       "title": "Mouse",
+      "img": "src/public/images/mouse.jpg",
       "countOfSell": 5,
       "CountOfviews": 5,
       "price": 150,
@@ -19,6 +21,34 @@
     {
       "id": "3",
       "title": "Keyboard",
+      "img": "src/public/images/keyboard.jpg",
+      "countOfSell": 6,
+      "CountOfviews": 10,
+      "price": 150,
+      "quantityInStore": 10
+    },
+    {
+      "id": "4",
+      "title": "laptop",
+      "img": "src/public/images/laptop.jpg",
+      "countOfSell": 6,
+      "CountOfviews": 10,
+      "price": 150,
+      "quantityInStore": 10
+    },
+    {
+      "id": "5",
+      "title": "mic",
+      "img": "src/public/images/mic.jpg",
+      "countOfSell": 6,
+      "CountOfviews": 10,
+      "price": 150,
+      "quantityInStore": 10
+    },
+    {
+      "id": "6",
+      "title": "speaker",
+      "img": "src/public/images/speaker.jpg",
       "countOfSell": 6,
       "CountOfviews": 10,
       "price": 150,

@@ -1,5 +1,7 @@
+import ListProduct from "./ListProduct";
+
 const Hero = () => {
-  return <div>Hero</div>;
+  return <div><ListProduct/></div>;
 };
 
 export default Hero
