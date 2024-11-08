@@ -3,45 +3,82 @@ import { Image } from "@nextui-org/react";
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
-import { TSignUpSchema, signUpSchema } from "../utils/ZodTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { hashPassword } from "../utils/hash";
+import { TSignInSchema, signInSchema } from "../utils/ZodTypes";
+import { useState, useEffect } from "react";
+
+// Define a type for the user state
+type User = {
+  email: string;
+  password: string;
+  // Add other properties if needed
+};
 
 export default function Signup() {
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
     setError,
-  } = useForm<TSignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<TSignInSchema>({
+    resolver: zodResolver(signInSchema),
   });
 
-  const onSubmit = async (data: TSignUpSchema) => {
+  const onSubmit = async (data: TSignInSchema) => {
     const response = await fetch("http://localhost:8000/users");
     const apiData = await response.json();
-    const existEmails = apiData.map((user: any) => user.email);
 
-    if (existEmails.includes(data.email)) {
+    let user: User | null = null;
+    const hashedPass = hashPassword({ pass: data.password }).toString();
+
+    apiData.forEach((apiUser: User) => {
+      if (apiUser.email === data.email) {
+        user = apiUser;
+      }
+    });
+
+    if (!user) {
       setError("email", {
         type: "server",
-        message: "email already exists",
+        message: "email not found",
       });
-    } else if (response.ok) {
-      const hashedPassword = hashPassword({ pass: data.password }).toString();
-      const newData = { ...data, password: hashedPassword };
-      await fetch("http://localhost:8000/users", {
-        method: "POST",
-        body: JSON.stringify(newData),
+    } else if (user && (user as User).password != hashedPass) {
+      setError("password", {
+        type: "server",
+        message: "password is incorrect",
       });
+    } else {
       navigate("/hero");
     }
+
+    // const hashedPass = hashPassword({ pass: data.password }).toString();
+
+    // if (user && user.password != hashedPass) {
+    //   setError("password", {
+    //     type: "server",
+    //     message: "password is incorrect",
+    //   });
+    //   return;
+    // }
+
+    // if (response.ok) {
+    //   const hashedPassword = hashPassword({ pass: data.password });
+    //   const newData = { ...data, password: hashedPassword };
+    //   await fetch("http://localhost:8000/users", {
+    //     method: "POST",
+    //     body: JSON.stringify(newData),
+    //   });
+    //   navigate("/hero");
+    // }
   };
 
   return (
+    
     <div className="flex justify-center items-center h-screen">
       <div className=" w-full h-full">
         <Image
@@ -55,7 +92,7 @@ export default function Signup() {
           <h1
             className={` text-white  shadow-xl font-bold md:text-5xl  text-xl `}
           >
-            Signup <span className="text-secondaryColor">Page</span>
+            Signin <span className="text-secondaryColor">Page</span>
           </h1>
           <div className="flex flex-col space-y-5 justify-center items-center w-1/2">
             <form
@@ -74,18 +111,7 @@ export default function Signup() {
               {errors.email && (
                 <p className="text-red-500 text-left">{`${errors.email.message}`}</p>
               )}
-              <Input
-                {...register("username")}
-                type="text"
-                variant="underlined"
-                label="UserName"
-                classNames={{
-                  input: ["!text-white"],
-                }}
-              />
-              {errors.username && (
-                <p className="text-red-500 text-left">{`${errors.username.message}`}</p>
-              )}
+
               <Input
                 {...register("password")}
                 type="password"
@@ -98,34 +124,13 @@ export default function Signup() {
               {errors.password && (
                 <p className="text-red-500 text-left">{`${errors.password.message}`}</p>
               )}
-              <Input
-                {...register("confirmPassword")}
-                type="password"
-                variant="underlined"
-                label="Confirm Password"
-                classNames={{
-                  input: ["!text-white"],
-                }}
-              />
-              {errors.confirmPassword && (
-                <p className="text-red-500 text-left">{`${errors.confirmPassword.message}`}</p>
-              )}
-              <div className="flex justify-center items-center space-x-5">
+
+              <div>
                 <Button
                   disabled={isSubmitting}
                   type="submit"
                   className="text-white disabled:bg-gray-500"
                   variant="bordered"
-                >
-                  Signup
-                </Button>
-                <Button
-                  onClick={() => navigate("/signin")}
-                  type="submit"
-                  className={`text-secondaryColor disabled:bg-gray-500 ${
-                    !errors.email && "hidden"
-                  }`}
-                  variant="ghost"
                 >
                   Signin
                 </Button>
