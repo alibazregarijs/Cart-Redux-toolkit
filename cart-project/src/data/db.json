@@ -24,5 +24,110 @@
       "price": 150,
       "quantityInStore": 10
     }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "email": "test@test.com",
+      "password": "test1234",
+      "username": "test"
+    },
+    {
+      "id": "2",
+      "email": "test2@test2.com",
+      "password": "test1234",
+      "username": "test2"
+    },
+    {
+      "id": "6037",
+      "email": "tagi@g.com",
+      "password": "alibazregari",
+      "confirmPassword": "alibazregari",
+      "username": "alibazregari"
+    },
+    {
+      "id": "965a",
+      "email": "bs@a.com",
+      "password": 5284592257,
+      "confirmPassword": "alibazregari",
+      "username": "ali"
+    },
+    {
+      "id": "b071",
+      "email": "ggg@g.com",
+      "password": 5284592257,
+      "confirmPassword": "alibazregari",
+      "username": "ali"
+    },
+    {
+      "id": "7ef4",
+      "email": "akbar1@gmail.com",
+      "password": 5284592257,
+      "confirmPassword": "alibazregari",
+      "username": "ali"
+    },
+    {
+      "id": "c70a",
+      "email": "saeed@gmail.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "ali"
+    },
+    {
+      "id": "ef0a",
+      "email": "test@tessssssst.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "ali"
+    },
+    {
+      "id": "9029",
+      "email": "test@test.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "ali"
+    },
+    {
+      "id": "43b0",
+      "email": "test@test.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "a;io"
+    },
+    {
+      "id": "3a26",
+      "email": "test@test.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "saeed@gmail.com"
+    },
+    {
+      "id": "12",
+      "email": "85@gmail.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "ali"
+    },
+    {
+      "id": "13",
+      "email": "85@gmail.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "ali"
+    },
+    {
+      "id": "14",
+      "email": "85@gmail.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "saeed@gmail.com"
+    },
+    {
+      "id": "15",
+      "email": "85ssdd@gmail.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "saeed@gmail.com"
+    }
   ]
 }
