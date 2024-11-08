@@ -10,6 +10,11 @@ import { hashPassword } from "../utils/hash";
 
 export default function Signup() {
   const navigate = useNavigate();
+  type User = {
+    id: number;
+    email: string;
+    password: string;
+  };
   const {
     register,
     handleSubmit,
@@ -23,21 +28,39 @@ export default function Signup() {
   const onSubmit = async (data: TSignUpSchema) => {
     const response = await fetch("http://localhost:8000/users");
     const apiData = await response.json();
+    let userId = apiData.length + 1
     const existEmails = apiData.map((user: any) => user.email);
 
-    if (existEmails.includes(data.email)) {
+    if(existEmails.includes(data.email)){
       setError("email", {
         type: "server",
         message: "email already exists",
       });
-    } else if (response.ok) {
+      return
+    }
+
+    apiData.map((apiUser: User) => {
+      if(apiUser.email === data.email){
+        setError("email", {
+          type: "server",
+          message: "email already exists",
+        });
+        return
+      }
+  
+    })
+
+    if (response.ok) {
       const hashedPassword = hashPassword({ pass: data.password }).toString();
-      const newData = { ...data, password: hashedPassword };
+      const newData = { ...data, password: hashedPassword , id:userId.toString() };
       await fetch("http://localhost:8000/users", {
         method: "POST",
         body: JSON.stringify(newData),
       });
+
+      localStorage.setItem("userId", userId.toString());
       navigate("/hero");
+
     }
   };
 

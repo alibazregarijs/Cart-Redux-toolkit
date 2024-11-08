@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 
 // Define a type for the user state
 type User = {
+  id: number;
   email: string;
   password: string;
   // Add other properties if needed
@@ -53,7 +54,9 @@ export default function Signup() {
         message: "password is incorrect",
       });
     } else {
+      localStorage.setItem("userId", (user as User).id.toString());
       navigate("/hero");
+      reset();
     }
 
     // const hashedPass = hashPassword({ pass: data.password }).toString();
