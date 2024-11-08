@@ -5,8 +5,12 @@ import { Button } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import { TSignUpSchema, signUpSchema } from "../utils/ZodTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { hashPassword } from "../utils/hash";
+
 
 export default function Signup() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -27,8 +31,19 @@ export default function Signup() {
         type: "server",
         message: "email already exists",
       });
+      return;
+    }
+    if (response.ok) {
+      const hashedPassword = hashPassword({ pass: data.password });
+      const newData = { ...data, password: hashedPassword };
+      await fetch("http://localhost:8000/users", {
+        method: "POST",
+        body: JSON.stringify(newData),
+      });
+      navigate("/hero");
     }
   };
+
 
   return (
     <div className="flex justify-center items-center h-screen">

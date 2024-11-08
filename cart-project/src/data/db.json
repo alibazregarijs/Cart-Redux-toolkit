@@ -37,6 +37,27 @@
       "email": "test2@test2.com",
       "password": "test1234",
       "username": "test2"
+    },
+    {
+      "id": "6037",
+      "email": "tagi@g.com",
+      "password": "alibazregari",
+      "confirmPassword": "alibazregari",
+      "username": "alibazregari"
+    },
+    {
+      "id": "965a",
+      "email": "bs@a.com",
+      "password": 5284592257,
+      "confirmPassword": "alibazregari",
+      "username": "ali"
+    },
+    {
+      "id": "b071",
+      "email": "ggg@g.com",
+      "password": 5284592257,
+      "confirmPassword": "alibazregari",
+      "username": "ali"
     }
   ]
 }
