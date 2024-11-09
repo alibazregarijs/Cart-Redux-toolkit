@@ -1,10 +1,11 @@
 import Product from "./Product";
 import { useEffect, useState } from "react";
 type Product = {
-    id:string,
+  id:string,
   title: string;
   img: string;
   price: number;
+  quantity: number;
   quantityInStore: number;
 };
 const ListProduct = () => {

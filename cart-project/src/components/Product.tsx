@@ -2,18 +2,31 @@ import { Image } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
 import { DollarCircle } from "iconsax-react";
+import { useCartDispatch, useCartSelector } from '../store/hooks'
+import { addToCart } from '../store/CartSlice'
+
 const Product = ({
   title,
   img,
   price,
   quantityInStore,
+  id,
+ 
 }: {
+  id: string;
   title: string;
   img: string;
   price: number;
   quantityInStore: number;
 }) => {
   const [hover, setHover] = useState(false);
+  const [productQuantity , setProductQuantity] = useState(1)
+
+  const dispatch = useCartDispatch()
+  function handleAddToCart() {
+    dispatch(addToCart({ id, title, price, img, quantity:productQuantity, quantityInStore }))
+  }
+
   return (
     <div className="flex flex-col relative items-center justify-center">
       <div className="relative space-y-9">
@@ -49,7 +62,7 @@ const Product = ({
         )}
       </div>
       <div className="flex flex-col justify-center items-center mt-5">
-        <Button className="bg-secondaryColor text-white">Add to Cart</Button>
+        <Button onClick={() => { setProductQuantity(productQuantity+1),handleAddToCart()}} className="bg-secondaryColor text-white">Add to Cart</Button>
       </div>
     </div>
   );
