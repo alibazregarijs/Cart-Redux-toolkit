@@ -1,9 +1,11 @@
 import SearchBox from "./SearchBox";
 import { Like, Profile, ShoppingCart } from "iconsax-react";
-
+import { useDisclosure } from "@nextui-org/react";
+import MyModal from "./Modal";
 const NavBar = () => {
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   return (
-    <div className="flex justify-between items-center mx-5">
+    <div className="flex justify-between items-center mx-5 mt-2">
       <div>
         <Profile size="32" className="text-mainColor" />
       </div>
@@ -11,9 +13,10 @@ const NavBar = () => {
         <SearchBox />
       </div>
       <div className="flex justify-center items-center gap-10">
-        <ShoppingCart size="32" className="text-secondaryColor cursor-pointer" />
+        <ShoppingCart onClick={onOpen} size="32" className="text-secondaryColor cursor-pointer" />
         <Like size="32" className="text-secondaryColor cursor-pointer"/>
       </div>
+      {isOpen && <MyModal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>}
     </div>
   );
 };
