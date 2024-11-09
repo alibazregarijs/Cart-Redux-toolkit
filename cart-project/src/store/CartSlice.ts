@@ -6,6 +6,7 @@ export type CartItem = {
   price: number
   quantityInStore: number
   quantity: number
+  img:string
 }
 
 type CartState = {
@@ -26,8 +27,9 @@ export const cartSlice = createSlice({
       )
       
       if (itemIndex >= 0) {
-        console.log(action.payload.quantity,'quantityyyyyyyyyy')
+        console.log("biron")
         if(state.items[itemIndex].quantityInStore >= action.payload.quantity){
+          console.log("dakhel")
           state.items[itemIndex].quantity++
         }
       } else {

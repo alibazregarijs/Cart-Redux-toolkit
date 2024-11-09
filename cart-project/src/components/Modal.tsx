@@ -7,9 +7,9 @@ import {
   Button,
 } from "@nextui-org/react";
 import { DollarCircle } from "iconsax-react";
-import { useEffect, useState } from "react";
-import { useCartSelector } from "../store/hooks";
-import { CartItem } from "../store/CartSlice";
+import { useState } from "react";
+import { addToCart, CartItem, removeFromCart } from "../store/CartSlice";
+import { useCartDispatch, useCartSelector } from '../store/hooks'
 
 const MyModal = ({
   isOpen,
@@ -21,12 +21,21 @@ const MyModal = ({
   onOpenChange: () => void;
 }) => {
   const [count, setCount] = useState(1);
+  const dispatch = useCartDispatch()
 
   const cartItems = useCartSelector((state) => state.cart.items);
   const totalPrice = cartItems.reduce(
     (value, item) => value + item.price * item.quantity,
     0
   );
+  function handleAddToCart({id,title,price,img,quantity,quantityInStore}:CartItem) {
+    dispatch(addToCart({ id, title, price, img, quantity, quantityInStore }))
+  }
+
+  function handleRemoveFromCart(id:string) {
+    dispatch(removeFromCart(id))
+  }
+
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -42,12 +51,14 @@ const MyModal = ({
                       <Button
                         className="text-mainColor min-w-1"
                         onClick={() => {
+                          
                           setCount((prevCount) => {
                             if (
                               prevCount >= 0 &&
                               !(item.quantityInStore <= prevCount)
                             )
-                              return prevCount + 1;
+                              
+                              handleAddToCart({...item,quantity:item.quantity+1})
                             return prevCount;
                           });
                         }}
@@ -55,7 +66,7 @@ const MyModal = ({
                         +
                       </Button>
                       <span className="text-gray-500 brightness-75 ">
-                        {count}
+                        {item.quantity}
                       </span>
                       <Button
                         className="text-mainColor min-w-1"

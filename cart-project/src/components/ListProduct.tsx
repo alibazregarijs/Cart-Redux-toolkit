@@ -21,6 +21,7 @@ const ListProduct = () => {
     fetchProducts();
   }, [])
 
+  
   return (
     <div className="grid grid-cols-3 gap-10">
         {products.map((product) => (

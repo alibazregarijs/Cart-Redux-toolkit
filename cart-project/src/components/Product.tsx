@@ -4,27 +4,31 @@ import { useState } from "react";
 import { DollarCircle } from "iconsax-react";
 import { useCartDispatch, useCartSelector } from '../store/hooks'
 import { addToCart } from '../store/CartSlice'
-
+import { useRef } from "react";
 const Product = ({
   title,
   img,
   price,
   quantityInStore,
   id,
- 
+  quantity,
 }: {
   id: string;
   title: string;
   img: string;
   price: number;
   quantityInStore: number;
+  quantity:number
 }) => {
   const [hover, setHover] = useState(false);
-  const [productQuantity , setProductQuantity] = useState(1)
-
+  const quantityRef = useRef(0)
   const dispatch = useCartDispatch()
+
+  const product = useCartSelector((state) => state.cart.items).find(item=>item.id===id);
+  
   function handleAddToCart() {
-    dispatch(addToCart({ id, title, price, img, quantity:productQuantity, quantityInStore }))
+    quantityRef.current = (product?.quantity ?? 0) + 1
+    dispatch(addToCart({ id, title, price, img, quantity:quantityRef.current, quantityInStore }))
   }
 
   return (
@@ -62,7 +66,7 @@ const Product = ({
         )}
       </div>
       <div className="flex flex-col justify-center items-center mt-5">
-        <Button onClick={() => { setProductQuantity(productQuantity+1),handleAddToCart()}} className="bg-secondaryColor text-white">Add to Cart</Button>
+        <Button onClick={handleAddToCart} className="bg-secondaryColor text-white">Add to Cart</Button>
       </div>
     </div>
   );
