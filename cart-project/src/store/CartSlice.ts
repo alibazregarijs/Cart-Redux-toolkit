@@ -27,9 +27,7 @@ export const cartSlice = createSlice({
       )
       
       if (itemIndex >= 0) {
-        console.log("biron")
         if(state.items[itemIndex].quantityInStore >= action.payload.quantity){
-          console.log("dakhel")
           state.items[itemIndex].quantity++
         }
       } else {
@@ -41,9 +39,12 @@ export const cartSlice = createSlice({
         (item) => item.id === action.payload
       )
 
+      console.log("in remove")
+    
       if (state.items[itemIndex].quantity === 1) {
         state.items.splice(itemIndex, 1)
       } else {
+        console.log("dovom")
         state.items[itemIndex].quantity--
       }
     },

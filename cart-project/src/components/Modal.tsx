@@ -9,7 +9,7 @@ import {
 import { DollarCircle } from "iconsax-react";
 import { useState } from "react";
 import { addToCart, CartItem, removeFromCart } from "../store/CartSlice";
-import { useCartDispatch, useCartSelector } from '../store/hooks'
+import { useCartDispatch, useCartSelector } from "../store/hooks";
 
 const MyModal = ({
   isOpen,
@@ -21,21 +21,27 @@ const MyModal = ({
   onOpenChange: () => void;
 }) => {
   const [count, setCount] = useState(1);
-  const dispatch = useCartDispatch()
+  const dispatch = useCartDispatch();
 
   const cartItems = useCartSelector((state) => state.cart.items);
   const totalPrice = cartItems.reduce(
     (value, item) => value + item.price * item.quantity,
     0
   );
-  function handleAddToCart({id,title,price,img,quantity,quantityInStore}:CartItem) {
-    dispatch(addToCart({ id, title, price, img, quantity, quantityInStore }))
+  function handleAddToCart({
+    id,
+    title,
+    price,
+    img,
+    quantity,
+    quantityInStore,
+  }: CartItem) {
+    dispatch(addToCart({ id, title, price, img, quantity, quantityInStore }));
   }
 
-  function handleRemoveFromCart(id:string) {
-    dispatch(removeFromCart(id))
+  function handleRemoveFromCart(id: string) {
+    dispatch(removeFromCart(id));
   }
-
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -45,22 +51,16 @@ const MyModal = ({
             <ModalHeader className="flex flex-col gap-1">Cart</ModalHeader>
             <ModalBody>
               <div className="flex flex-col space-y-10">
-                {cartItems.map((item,index) => (
-                  <div className="flex justify-between items-center gap-2" key={index}>
+                {cartItems.map((item, index) => (
+                  <div
+                    className="flex justify-between items-center gap-2"
+                    key={index}
+                  >
                     <div className="flex justify-center items-center gap-2">
                       <Button
                         className="text-mainColor min-w-1"
                         onClick={() => {
-                          
-                          setCount((prevCount) => {
-                            if (
-                              prevCount >= 0 &&
-                              !(item.quantityInStore <= prevCount)
-                            )
-                              
-                              handleAddToCart({...item,quantity:item.quantity+1})
-                            return prevCount;
-                          });
+                          handleAddToCart({...item,quantity:item.quantity+1})
                         }}
                       >
                         +
@@ -71,10 +71,7 @@ const MyModal = ({
                       <Button
                         className="text-mainColor min-w-1"
                         onClick={() => {
-                          setCount((prevCount) => {
-                            if (prevCount > 0) return prevCount - 1;
-                            return prevCount;
-                          });
+                          handleRemoveFromCart(item.id);
                         }}
                       >
                         -
