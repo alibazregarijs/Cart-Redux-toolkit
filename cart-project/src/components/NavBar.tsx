@@ -1,10 +1,9 @@
 import SearchBox from "./SearchBox";
-import logo from "../assets/logo.png";
 import { Like, Profile, ShoppingCart } from "iconsax-react";
 
 const NavBar = () => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center mx-5">
       <div>
         <Profile size="32" className="text-mainColor" />
       </div>

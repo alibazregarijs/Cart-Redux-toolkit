@@ -10,7 +10,7 @@ const SearchBox = () => {
       startContent={<SearchNormal1 size="18" className="text-mainColor cursor-pointer"/>}
       placeholder="Search For Products"
       onClear={() => console.log("input cleared")}
-      className="max-w-xs"
+      className="lg:w-96 w-60"
     />
   );
 };

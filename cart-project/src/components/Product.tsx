@@ -31,14 +31,18 @@ const Product = ({
           }}
         />
         {hover && (
-          <div className="absolute top-60  left-0 z-20 right-0 bottom-0 w-full max-h-5 flex items-center justify-between">
+          <div onMouseEnter={() => {
+            setHover(true);
+          }} onMouseLeave={() => {
+            setHover(false);
+          }} className="absolute top-60  left-0 z-20 right-0 bottom-0 w-full max-h-5 flex items-center justify-between">
             <div className="flex items-center justify-center">
-              <span className="text-gray-400 font-semibold font-mono mx-2 whitespace-nowrap  ">
+              <span className="text-white font-semibold font-mono mx-2 whitespace-nowrap  ">
                 {price}
               </span>
               <DollarCircle size="20" className="text-secondaryColor"/>
             </div>
-            <span className="text-gray-400 font-semibold font-mono mx-2 whitespace-nowrap">
+            <span className="text-white font-semibold font-mono mx-2 whitespace-nowrap">
               {title}
             </span>
           </div>
