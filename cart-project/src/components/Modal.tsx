@@ -68,23 +68,24 @@ const MyModal = ({isOpen, onOpenChange, cartItems, totalPrice}:{isOpen:boolean,o
                     </div>
                   </div>
                 ))}
-                <div className="flex justify-end items-center gap-2">
-                  <span>Total Price : {totalPrice}</span>
-                  <DollarCircle size="20" className="text-secondaryColor" />
-                </div>
+                {cartItems.length > 0 && (
+                  <div className="flex justify-end items-center gap-2">
+                    <span>Total Price : {totalPrice}</span>
+                    <DollarCircle size="20" className="text-secondaryColor" />
+                  </div>
+                )}
               </div>
             </ModalBody>
             <ModalFooter>
-              <Button
-                className="bg-secondaryColor text-white"
-                variant="light"
-                onPress={onClose}
-              >
-                Close
-              </Button>
+             {cartItems.length > 0 ? (
               <Button className="bg-mainColor text-white" onPress={onClose}>
                 Action
               </Button>
+             ) : (
+              <div className="flex justify-start items-center w-full">
+                <span className="text-gray-500 text-center">No items in the cart</span>
+              </div>
+             )}
             </ModalFooter>
           </>
         )}
