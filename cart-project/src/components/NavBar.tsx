@@ -1,7 +1,7 @@
 import SearchBox from "./SearchBox";
 import { Like, Profile, ShoppingCart } from "iconsax-react";
 import { useDisclosure } from "@nextui-org/react";
-import MyModal from "./Modal";
+import Cart from "./Cart";
 const NavBar = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   return (
@@ -16,7 +16,7 @@ const NavBar = () => {
         <ShoppingCart onClick={onOpen} size="32" className="text-secondaryColor cursor-pointer" />
         <Like size="32" className="text-secondaryColor cursor-pointer"/>
       </div>
-      {isOpen && <MyModal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>}
+      {isOpen && <Cart isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>}
     </div>
   );
 };

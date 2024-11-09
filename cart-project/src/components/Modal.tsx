@@ -1,49 +1,33 @@
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from "@nextui-org/react";
-import { DollarCircle } from "iconsax-react";
-import { useState } from "react";
+    Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    Button,
+  } from "@nextui-org/react";
 import { addToCart, CartItem, removeFromCart } from "../store/CartSlice";
-import { useCartDispatch, useCartSelector } from "../store/hooks";
+import { DollarCircle } from "iconsax-react";
+import { useCartDispatch } from "../store/hooks";
 
-const MyModal = ({
-  isOpen,
-  onOpen,
-  onOpenChange,
-}: {
-  isOpen: boolean;
-  onOpen: () => void;
-  onOpenChange: () => void;
-}) => {
-  const [count, setCount] = useState(1);
+const MyModal = ({isOpen, onOpenChange, cartItems, totalPrice}:{isOpen:boolean,onOpenChange:()=>void,cartItems:CartItem[],totalPrice:number}) => {
   const dispatch = useCartDispatch();
-
-  const cartItems = useCartSelector((state) => state.cart.items);
-  const totalPrice = cartItems.reduce(
-    (value, item) => value + item.price * item.quantity,
-    0
-  );
+  
   function handleAddToCart({
-    id,
-    title,
-    price,
-    img,
-    quantity,
-    quantityInStore,
-  }: CartItem) {
-    dispatch(addToCart({ id, title, price, img, quantity, quantityInStore }));
-  }
-
-  function handleRemoveFromCart(id: string) {
-    dispatch(removeFromCart(id));
-  }
-
-  return (
+        id,
+        title,
+        price,
+        img,
+        quantity,
+        quantityInStore,
+      }: CartItem) {
+        dispatch(addToCart({ id, title, price, img, quantity, quantityInStore }));
+      }
+    
+      function handleRemoveFromCart(id: string) {
+        dispatch(removeFromCart(id));
+      }
+    return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         {(onClose) => (
@@ -106,7 +90,7 @@ const MyModal = ({
         )}
       </ModalContent>
     </Modal>
-  );
-};
+  )
+}
 
-export default MyModal;
+export default MyModal
