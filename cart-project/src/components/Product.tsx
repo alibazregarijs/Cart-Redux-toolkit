@@ -5,8 +5,9 @@ import { DollarCircle, Star1 } from "iconsax-react";
 import { useCartDispatch, useCartSelector } from "../store/hooks";
 import { addToCart } from "../store/CartSlice";
 import { useRef } from "react";
+import { fetchRatings } from "../api/rating";
+import { handleStarRating } from "../api/rating";
 
-import { AddRating, ratingSlice } from "../store/RatingSlice";
 const Product = ({
   title,
   img,
@@ -23,27 +24,23 @@ const Product = ({
   quantity: number;
 }) => {
   const [hover, setHover] = useState(false);
-  const quantityRef = useRef(0);
-  const userId = localStorage.getItem("userId")?.toString() || "defaultUserId";
   const [ratings, setRatings] = useState<number>(0);
-  const dispatch = useCartDispatch();
   const [boldStars, setBoldStars] = useState<boolean[]>(Array(5).fill(false));
-  const starRef = useRef(0);
 
+  const userId = localStorage.getItem("userId")?.toString() || "defaultUserId";
+
+  const starRef = useRef(0);
+  const quantityRef = useRef(0);
+
+  const dispatch = useCartDispatch();
   const product = useCartSelector((state) => state.cart.items).find(
     (item) => item.id === id
   );
 
-  const fetchRatings = async () => {
-    const response = await fetch(
-      `http://localhost:8000/rating?productId=${id}&userId=${userId}`
-    );
-    const data = await response.json();
-    setRatings(data[0]?.rating);
-  };
-
   useEffect(() => {
-    fetchRatings();
+    fetchRatings(id,userId).then((rating)=>{
+      setRatings(rating)
+    })
   }, []);
 
   useEffect(() => {
@@ -61,53 +58,6 @@ const Product = ({
       });
   };
 
-  const toggleStarBoldness = (index: number) => {
-    setBoldStars((prev) => {
-      const newBoldStars = [...prev];
-      newBoldStars.fill(true, 0, index);
-      newBoldStars[index] = !newBoldStars[index];
-      newBoldStars.fill(false, index + 1);
-      starRef.current = newBoldStars.filter((value) => value === true).length;
-      return newBoldStars;
-    });
-  };
-
-  const handleStarRating = ({ id }: { id: string }) => {
-    const fetchRating = async () => {
-      const response = await fetch(
-        `http://localhost:8000/rating?productId=${id}&userId=${userId}`
-      );
-      const data = await response.json();
-      const prod = data[0];
-
-      if (prod) {
-        const newRating = { ...prod, rating: starRef.current };
-        await fetch(`http://localhost:8000/rating/${prod.id}`, {
-          method: "PUT",
-          body: JSON.stringify(newRating),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      } else {
-        const response = await fetch(`http://localhost:8000/rating`);
-        const data = await response.json();
-        console.log(data, "dataaaaaaaaa");
-        const ratingId = (parseInt(data.length) + 1).toString();
-        const newRating = {
-          id: ratingId,
-          userId,
-          productId: id,
-          rating: starRef.current,
-        };
-        await fetch(`http://localhost:8000/rating`, {
-          method: "POST",
-          body: JSON.stringify(newRating),
-        });
-      }
-    };
-    fetchRating();
-  };
   function handleAddToCart() {
     quantityRef.current = (product?.quantity ?? 0) + 1;
     dispatch(
@@ -163,13 +113,12 @@ const Product = ({
       </div>
       <div className="flex items-center justify-center mt-3">
         {[...Array(5)].map((_, i) => (
-          
           <span key={i}>
             <Star1
               size="20"
               onClick={() => {
                 setRate(true,i);
-                handleStarRating({ id });
+                handleStarRating({ id,userId,starRef });
               }}
               variant={boldStars[i] ? "Bold" : "Outline"}
               className={`cursor-pointer text-secondaryColor`}
