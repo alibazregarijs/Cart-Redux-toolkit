@@ -12,20 +12,18 @@
     {
       "id": "2",
       "title": "Mouse",
-      "img": "src/public/images/mouse.jpg",
-      "countOfSell": 5,
-      "CountOfviews": 5,
       "price": 150,
-      "quantityInStore": 2
+      "img": "src/public/images/mouse.jpg",
+      "quantity": 1,
+      "quantityInStore": 1
     },
     {
       "id": "3",
       "title": "Keyboard",
-      "img": "src/public/images/keyboard.jpg",
-      "countOfSell": 6,
-      "CountOfviews": 10,
       "price": 150,
-      "quantityInStore": 6
+      "img": "src/public/images/keyboard.jpg",
+      "quantity": 2,
+      "quantityInStore": 4
     },
     {
       "id": "4",

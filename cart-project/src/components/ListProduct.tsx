@@ -14,7 +14,8 @@ const ListProduct = () => {
   const fetchProducts = async () => {
     const response = await fetch("http://localhost:8000/products");
     const data = await response.json();
-    setProducts(data);
+    const prods = data.filter((product: Product) => product.quantityInStore > 0);
+    setProducts(prods);
   }
 
   useEffect(() => {

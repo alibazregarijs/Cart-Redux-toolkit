@@ -38,13 +38,10 @@ export const cartSlice = createSlice({
       const itemIndex = state.items.findIndex(
         (item) => item.id === action.payload
       )
-
-      console.log("in remove")
     
       if (state.items[itemIndex].quantity === 1) {
         state.items.splice(itemIndex, 1)
       } else {
-        console.log("dovom")
         state.items[itemIndex].quantity--
       }
     },

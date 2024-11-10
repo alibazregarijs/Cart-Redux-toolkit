@@ -8,11 +8,12 @@ import {
   } from "@nextui-org/react";
 import { addToCart, CartItem, removeFromCart } from "../store/CartSlice";
 import { DollarCircle } from "iconsax-react";
-import { useCartDispatch } from "../store/hooks";
+import { useCartDispatch, useCartSelector } from "../store/hooks";
+import { useEffect, useState } from "react";
 
 const MyModal = ({isOpen, onOpenChange, cartItems, totalPrice}:{isOpen:boolean,onOpenChange:()=>void,cartItems:CartItem[],totalPrice:number}) => {
   const dispatch = useCartDispatch();
-  
+
   function handleAddToCart({
         id,
         title,
@@ -26,6 +27,15 @@ const MyModal = ({isOpen, onOpenChange, cartItems, totalPrice}:{isOpen:boolean,o
     
       function handleRemoveFromCart(id: string) {
         dispatch(removeFromCart(id));
+      }
+
+      function handleBuy(){
+        cartItems.forEach(item => {
+          fetch(`http://localhost:8000/products/${item.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ ...item , quantityInStore: item.quantityInStore - item.quantity }),
+          });
+        });
       }
     return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -78,9 +88,10 @@ const MyModal = ({isOpen, onOpenChange, cartItems, totalPrice}:{isOpen:boolean,o
             </ModalBody>
             <ModalFooter>
              {cartItems.length > 0 ? (
-              <Button className="bg-mainColor text-white" onPress={onClose}>
-                Action
+              <Button onClick={()=>{handleBuy();onClose()}} className="bg-mainColor text-white" >
+                Buy
               </Button>
+              
              ) : (
               <div className="flex justify-start items-center w-full">
                 <span className="text-gray-500 text-center">No items in the cart</span>
