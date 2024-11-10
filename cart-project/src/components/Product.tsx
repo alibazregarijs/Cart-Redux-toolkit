@@ -27,8 +27,8 @@ const Product = ({
   const userId = localStorage.getItem("userId")?.toString() || "defaultUserId";
   const [ratings, setRatings] = useState<number>(0);
   const dispatch = useCartDispatch();
-
-
+  const [boldStars, setBoldStars] = useState<boolean[]>(Array(5).fill(false));
+  const starRef = useRef(0);
 
   const product = useCartSelector((state) => state.cart.items).find(
     (item) => item.id === id
@@ -46,30 +46,19 @@ const Product = ({
     fetchRatings();
   }, []);
 
-
-  const [boldStars, setBoldStars] = useState<boolean[]>(Array(5).fill(false));
-  const starRef = useRef(0);
-
   useEffect(() => {
     setRate(false,ratings)
   }, [ratings]);
 
   const setRate = (out:boolean,index:number) => {
-
       setBoldStars((prev) => {
         const newBoldStars = [...prev];
         newBoldStars.fill(true, 0, index);
         newBoldStars[index] = !newBoldStars[index];
-        if(out){
-          newBoldStars.fill(false, index + 1);
-        }
-        else{
-          newBoldStars.fill(false, index);
-        }
+        out ? newBoldStars.fill(false, index + 1) : newBoldStars.fill(false, index)
         starRef.current = newBoldStars.filter((value) => value === true).length;
         return newBoldStars;
       });
-
   };
 
   const toggleStarBoldness = (index: number) => {
