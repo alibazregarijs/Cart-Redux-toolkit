@@ -8,8 +8,8 @@ import {
   } from "@nextui-org/react";
 import { addToCart, CartItem, removeFromCart } from "../store/CartSlice";
 import { DollarCircle } from "iconsax-react";
-import { useCartDispatch, useCartSelector } from "../store/hooks";
-import { useEffect, useState } from "react";
+import { useCartDispatch } from "../store/hooks";
+
 
 const MyModal = ({isOpen, onOpenChange, cartItems, totalPrice}:{isOpen:boolean,onOpenChange:()=>void,cartItems:CartItem[],totalPrice:number}) => {
   const dispatch = useCartDispatch();

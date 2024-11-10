@@ -156,6 +156,52 @@
       "password": "5284592257",
       "confirmPassword": "alibazregari",
       "username": "saeed@gmail.com"
+    },
+    {
+      "id": "16",
+      "email": "parsa@gmail.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "parsa"
+    },
+    {
+      "id": "17",
+      "email": "ggg@ggg.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "alibazregari"
+    }
+  ],
+  "rating": [
+    {
+      "id": "1",
+      "userId": "2",
+      "productId": "2",
+      "rating": 0
+    },
+    {
+      "id": "2",
+      "userId": "c70a",
+      "productId": "2",
+      "rating": 5
+    },
+    {
+      "id": "3",
+      "userId": "16",
+      "productId": "2",
+      "rating": 2
+    },
+    {
+      "id": "4",
+      "userId": "17",
+      "productId": "2",
+      "rating": 3
+    },
+    {
+      "id": "5",
+      "userId": "17",
+      "productId": "3",
+      "rating": 3
     }
   ]
 }
