@@ -6,7 +6,7 @@ import { useCartDispatch, useCartSelector } from "../store/hooks";
 import { addToCart } from "../store/CartSlice";
 import { useRef } from "react";
 
-import { AddRating } from "../store/RatingSlice";
+import { AddRating, ratingSlice } from "../store/RatingSlice";
 const Product = ({
   title,
   img,
@@ -51,15 +51,26 @@ const Product = ({
   const starRef = useRef(0);
 
   useEffect(() => {
-    setBoldStars((prev) => {
-      const newBoldStars = [...prev];
-      newBoldStars.fill(true, 0, ratings);
-      newBoldStars[ratings] = !newBoldStars[ratings];
-      newBoldStars.fill(false, ratings);
-      starRef.current = newBoldStars.filter((value) => value === true).length;
-      return newBoldStars;
-    });
+    setRate(false,ratings)
   }, [ratings]);
+
+  const setRate = (out:boolean,index:number) => {
+
+      setBoldStars((prev) => {
+        const newBoldStars = [...prev];
+        newBoldStars.fill(true, 0, index);
+        newBoldStars[index] = !newBoldStars[index];
+        if(out){
+          newBoldStars.fill(false, index + 1);
+        }
+        else{
+          newBoldStars.fill(false, index);
+        }
+        starRef.current = newBoldStars.filter((value) => value === true).length;
+        return newBoldStars;
+      });
+
+  };
 
   const toggleStarBoldness = (index: number) => {
     setBoldStars((prev) => {
@@ -168,7 +179,7 @@ const Product = ({
             <Star1
               size="20"
               onClick={() => {
-                toggleStarBoldness(i);
+                setRate(true,i);
                 handleStarRating({ id });
               }}
               variant={boldStars[i] ? "Bold" : "Outline"}
