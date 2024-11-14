@@ -1,43 +1,77 @@
 import {
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Button,
-  } from "@nextui-org/react";
-import { addToCart, CartItem, removeFromCart } from "../store/CartSlice";
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from "@nextui-org/react";
+import { addToCart, CartItem, removeFromCart , clearCart } from "../store/CartSlice";
 import { DollarCircle } from "iconsax-react";
 import { useCartDispatch } from "../store/hooks";
 
-
-const MyModal = ({isOpen, onOpenChange, cartItems, totalPrice}:{isOpen:boolean,onOpenChange:()=>void,cartItems:CartItem[],totalPrice:number}) => {
+const MyModal = ({
+  isOpen,
+  onOpenChange,
+  cartItems,
+  totalPrice,
+}: {
+  isOpen: boolean;
+  onOpenChange: () => void;
+  cartItems: CartItem[];
+  totalPrice: number;
+}) => {
   const dispatch = useCartDispatch();
 
   function handleAddToCart({
+    id,
+    title,
+    price,
+    img,
+    quantity,
+    quantityInStore,
+    quantityOfSell,
+  }: CartItem) {
+    dispatch(
+      addToCart({
         id,
         title,
         price,
         img,
         quantity,
         quantityInStore,
-      }: CartItem) {
-        dispatch(addToCart({ id, title, price, img, quantity, quantityInStore }));
-      }
-    
-      function handleRemoveFromCart(id: string) {
-        dispatch(removeFromCart(id));
-      }
+        quantityOfSell,
+      })
+    );
+  }
 
-      function handleBuy(){
-        cartItems.forEach(item => {
-          fetch(`http://localhost:8000/products/${item.id}`, {
-            method: 'PUT',
-            body: JSON.stringify({ ...item , quantityInStore: item.quantityInStore - item.quantity }),
-          });
+  function handleRemoveFromCart(id: string) {
+    dispatch(removeFromCart(id));
+  }
+
+  function handleBuy() {
+    cartItems.forEach((item) => {
+      if (item.quantityInStore != 0) {
+        fetch(`http://localhost:8000/products/${item.id}`, {
+          method: "PUT",
+
+          body: JSON.stringify({
+            ...item,
+            quantityInStore:
+              item.quantityInStore != 0
+                ? item.quantityInStore - item.quantity
+                : 0,
+            quantityOfSell:
+              item.quantityOfSell != 0
+                ? item.quantityOfSell + item.quantity
+                : item.quantity,
+          }),
         });
       }
-    return (
+    });
+    dispatch(clearCart());
+  }
+  return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         {(onClose) => (
@@ -54,7 +88,10 @@ const MyModal = ({isOpen, onOpenChange, cartItems, totalPrice}:{isOpen:boolean,o
                       <Button
                         className="text-mainColor min-w-1"
                         onClick={() => {
-                          handleAddToCart({...item,quantity:item.quantity+1})
+                          handleAddToCart({
+                            ...item,
+                            quantity: item.quantity + 1,
+                          });
                         }}
                       >
                         +
@@ -87,22 +124,29 @@ const MyModal = ({isOpen, onOpenChange, cartItems, totalPrice}:{isOpen:boolean,o
               </div>
             </ModalBody>
             <ModalFooter>
-             {cartItems.length > 0 ? (
-              <Button onClick={()=>{handleBuy();onClose()}} className="bg-mainColor text-white" >
-                Buy
-              </Button>
-              
-             ) : (
-              <div className="flex justify-start items-center w-full">
-                <span className="text-gray-500 text-center">No items in the cart</span>
-              </div>
-             )}
+              {cartItems.length > 0 ? (
+                <Button
+                  onClick={() => {
+                    handleBuy();
+                    onClose();
+                  }}
+                  className="bg-mainColor text-white"
+                >
+                  Buy
+                </Button>
+              ) : (
+                <div className="flex justify-start items-center w-full">
+                  <span className="text-gray-500 text-center">
+                    No items in the cart
+                  </span>
+                </div>
+              )}
             </ModalFooter>
           </>
         )}
       </ModalContent>
     </Modal>
-  )
-}
+  );
+};
 
-export default MyModal
+export default MyModal;

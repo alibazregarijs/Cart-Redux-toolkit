@@ -1,5 +1,4 @@
 import { Image } from "@nextui-org/react";
-import { Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { DollarCircle, Star1 } from "iconsax-react";
 import { useCartDispatch, useCartSelector } from "../store/hooks";
@@ -7,7 +6,15 @@ import { addToCart } from "../store/CartSlice";
 import { useRef } from "react";
 import { fetchRatings } from "../api/rating";
 import { handleStarRating } from "../api/rating";
+import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Button,
+} from "@nextui-org/react";
 
 const Product = ({
   title,
@@ -15,7 +22,7 @@ const Product = ({
   price,
   quantityInStore,
   id,
-
+  quantityOfSell,
 }: {
   id: string;
   title: string;
@@ -23,10 +30,12 @@ const Product = ({
   price: number;
   quantityInStore: number;
   quantity: number;
+  quantityOfSell: number;
 }) => {
   const [hover, setHover] = useState(false);
   const [ratings, setRatings] = useState<number>(0);
   const [boldStars, setBoldStars] = useState<boolean[]>(Array(5).fill(false));
+  const [error, setError] = useState<string>("");
 
   const userId = localStorage.getItem("userId")?.toString() || "defaultUserId";
 
@@ -39,38 +48,46 @@ const Product = ({
   );
 
   useEffect(() => {
-    fetchRatings(id,userId).then((rating)=>{
-      setRatings(rating)
-    })
+    fetchRatings(id, userId).then((rating) => {
+      setRatings(rating);
+    });
   }, []);
 
   useEffect(() => {
-    setRate(false,ratings)
+    setRate(false, ratings);
   }, [ratings]);
 
-  const setRate = (out:boolean,index:number) => {
-      setBoldStars((prev) => {
-        const newBoldStars = [...prev];
-        newBoldStars.fill(true, 0, index);
-        newBoldStars[index] = !newBoldStars[index];
-        out ? newBoldStars.fill(false, index + 1) : newBoldStars.fill(false, index)
-        starRef.current = newBoldStars.filter((value) => value === true).length;
-        return newBoldStars;
-      });
+  const setRate = (out: boolean, index: number) => {
+    setBoldStars((prev) => {
+      const newBoldStars = [...prev];
+      newBoldStars.fill(true, 0, index);
+      newBoldStars[index] = !newBoldStars[index];
+      out
+        ? newBoldStars.fill(false, index + 1)
+        : newBoldStars.fill(false, index);
+      starRef.current = newBoldStars.filter((value) => value === true).length;
+      return newBoldStars;
+    });
   };
 
   function handleAddToCart() {
     quantityRef.current = (product?.quantity ?? 0) + 1;
-    dispatch(
-      addToCart({
-        id,
-        title,
-        price,
-        img,
-        quantity: quantityRef.current,
-        quantityInStore,
-      })
-    );
+
+    if (quantityInStore != 0 && quantityInStore >= quantityRef.current) {
+      dispatch(
+        addToCart({
+          id,
+          title,
+          price,
+          img,
+          quantity: quantityRef.current,
+          quantityInStore,
+          quantityOfSell,
+        })
+      );
+    } else {
+      setError("No items in the store");
+    }
   }
 
   return (
@@ -115,8 +132,8 @@ const Product = ({
             <Star1
               size="20"
               onClick={() => {
-                setRate(true,i);
-                handleStarRating({ id,userId,starRef });
+                setRate(true, i);
+                handleStarRating({ id, userId, starRef });
               }}
               variant={boldStars[i] ? "Bold" : "Outline"}
               className={`cursor-pointer text-secondaryColor`}
@@ -125,14 +142,38 @@ const Product = ({
         ))}
       </div>
       <div className="flex flex-col justify-center items-center mt-3">
-        <Button
-          onClick={() => {
-            handleAddToCart();
+        <Popover
+          placement="top"
+          offset={50}
+          showArrow
+          isOpen={error ? true : false}
+          onOpenChange={(isOpen) => {
+            if (!isOpen) {
+              setError("");
+            }
           }}
-          className="bg-secondaryColor text-white"
         >
-          Add to Cart
-        </Button>
+          <PopoverTrigger>
+            <Button
+              onClick={() => {
+                handleAddToCart();
+              }}
+              className="bg-secondaryColor text-white"
+            >
+              Add to Cart
+            </Button>
+          </PopoverTrigger>
+          {error && (
+            <PopoverContent>
+              <div className="px-1 py-2">
+                <div className="text-small text-center font-bold text-red-600">
+                  Error Occurred
+                </div>
+                <div className="text-tiny text-center">{error}</div>
+              </div>
+            </PopoverContent>
+          )}
+        </Popover>
       </div>
     </div>
   );
