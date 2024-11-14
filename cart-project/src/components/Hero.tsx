@@ -1,10 +1,11 @@
-import ListProduct, { Product } from "./ListProduct";
+import ListProduct from "./ListProduct";
 import { fetchProducts } from "../api/rating";
 import { useState } from "react";
 import { useEffect } from "react";
+import { type ProductProps } from "../utils/types";
 
 const Hero = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductProps[]>([]);
   useEffect(() => {
     fetchProducts(setProducts);
   }, []);

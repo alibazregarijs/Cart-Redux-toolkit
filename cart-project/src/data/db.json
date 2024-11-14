@@ -195,13 +195,19 @@
       "id": "4",
       "userId": "17",
       "productId": "2",
-      "rating": 4
+      "rating": 2
     },
     {
       "id": "5",
       "userId": "17",
       "productId": "3",
       "rating": 4
+    },
+    {
+      "id": "6",
+      "userId": "17",
+      "productId": "1",
+      "rating": 5
     }
   ]
 }

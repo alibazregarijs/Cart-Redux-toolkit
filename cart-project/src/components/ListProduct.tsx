@@ -1,16 +1,7 @@
 
 import Product from "./Product";
 import Masonry from "react-masonry-css";
-export type Product = {
-  id: string;
-  title: string;
-  img: string;
-  price: number;
-  quantity: number;
-  quantityInStore: number;
-  rating?: number;
-  productId?: string;
-};
+import { type ProductProps } from "../utils/types";
 
 const breakpointColumnsObj = {
   default: 3,
@@ -18,9 +9,9 @@ const breakpointColumnsObj = {
   700: 2,
   500: 1
 };
-const ListProduct = ({products}: {products: Product[]}) => {
+const ListProduct = ({products}: {products: ProductProps[]}) => {
   return (
-    <Masonry breakpointCols={breakpointColumnsObj} className="flex animate-slide-fwd gap-10 relative">
+    <Masonry breakpointCols={breakpointColumnsObj} className="flex animate-slide-fwd gap-10 relative mx-4">
        {products?.map((product) => <Product key={product.id} {...product} />)}
     </Masonry>
   );
