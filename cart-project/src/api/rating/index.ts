@@ -1,4 +1,4 @@
-import { Product } from "../../components/ListProduct";
+import { type ProductProps } from "../../utils/types";
 
 export const fetchRatings = async (productId: string, userId: string) => {
   const response = await fetch(
@@ -68,10 +68,11 @@ export const fetchProduct = async (id: string) => {
 };
 
 export const fetchProducts = async (
-  setProducts: React.Dispatch<React.SetStateAction<Product[]>>
+  searchQuery: string,
+  setProducts: React.Dispatch<React.SetStateAction<ProductProps[]>>
 ) => {
-  const response = await fetch("http://localhost:8000/products");
+  const response = await fetch("http://localhost:8000/products")
   const data = await response.json();
-  const prods = data.filter((product: Product) => product.quantityInStore > 0);
-  setProducts(prods);
+  const prods = data.filter((product: ProductProps) => product.title.toLowerCase().includes(searchQuery.toLowerCase()))
+  setProducts(prods)
 };

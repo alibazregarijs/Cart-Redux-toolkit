@@ -2,7 +2,7 @@
   "products": [
     {
       "id": "1",
-      "title": "Headphones",
+      "title": "headphone",
       "countOfSell": 1,
       "img": "src/public/images/headphone.jpg",
       "CountOfviews": 3,
@@ -11,7 +11,7 @@
     },
     {
       "id": "2",
-      "title": "Mouse",
+      "title": "mouse",
       "price": 150,
       "img": "src/public/images/mouse.jpg",
       "quantity": 1,
@@ -19,7 +19,7 @@
     },
     {
       "id": "3",
-      "title": "Keyboard",
+      "title": "keyboard",
       "price": 150,
       "img": "src/public/images/keyboard.jpg",
       "quantity": 2,
@@ -36,7 +36,7 @@
     },
     {
       "id": "5",
-      "title": "mic",
+      "title": "microphone",
       "img": "src/public/images/mic.jpg",
       "countOfSell": 6,
       "CountOfviews": 10,

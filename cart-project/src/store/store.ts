@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import { cartSlice } from './CartSlice'
-import { ratingSlice } from './RatingSlice'
+import { searchSlice } from './SearchSlice'
 export const store = configureStore({
   reducer: {
     cart: cartSlice.reducer,
-    rating: ratingSlice.reducer,
+    search: searchSlice.reducer,
   },
 })
 
