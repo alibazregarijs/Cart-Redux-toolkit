@@ -106,7 +106,6 @@ const Product = ({
             </div>
             <span className="text-white font-semibold font-mono mx-2 whitespace-nowrap">
               {title}
-              {ratings}
             </span>
           </div>
         )}

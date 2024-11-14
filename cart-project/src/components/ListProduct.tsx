@@ -1,6 +1,5 @@
 import Product from "./Product";
-import { useEffect, useState } from "react";
-type Product = {
+export type Product = {
   id: string;
   title: string;
   img: string;
@@ -11,29 +10,7 @@ type Product = {
   productId?: string;
 };
 
-const ListProduct = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  
-
-  const fetchProducts = async () => {
-    const response = await fetch("http://localhost:8000/products");
-    const data = await response.json();
-    const prods = data.filter(
-      (product: Product) => product.quantityInStore > 0
-    );
-    setProducts(prods);
-  };
-
-
-
-  
-  useEffect(() => {
-    fetchProducts();
-    
-  }, []);
-
- 
-
+const ListProduct = ({products}: {products: Product[]}) => {
   return (
     <div className="grid grid-cols-3 gap-10">
       {products.map((product) => (

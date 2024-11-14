@@ -2,6 +2,8 @@ import SearchBox from "./SearchBox";
 import { Like, Profile, ShoppingCart } from "iconsax-react";
 import { useDisclosure } from "@nextui-org/react";
 import Cart from "./Cart";
+import { Link } from "react-router-dom";
+
 const NavBar = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   return (
@@ -14,7 +16,9 @@ const NavBar = () => {
       </div>
       <div className="flex justify-center items-center gap-10">
         <ShoppingCart onClick={onOpen} size="32" className="text-secondaryColor cursor-pointer" />
-        <Like size="32" className="text-secondaryColor cursor-pointer"/>
+        <Link to="/favorite">
+          <Like size="32" className="text-secondaryColor cursor-pointer"/>
+        </Link>
       </div>
       {isOpen && <Cart isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>}
     </div>
