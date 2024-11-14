@@ -1,4 +1,6 @@
+
 import Product from "./Product";
+import Masonry from "react-masonry-css";
 export type Product = {
   id: string;
   title: string;
@@ -10,13 +12,17 @@ export type Product = {
   productId?: string;
 };
 
+const breakpointColumnsObj = {
+  default: 3,
+  1100: 3,
+  700: 2,
+  500: 1
+};
 const ListProduct = ({products}: {products: Product[]}) => {
   return (
-    <div className="grid grid-cols-3 gap-10">
-      {products.map((product) => (
-        <Product key={product.id} {...product} />
-      ))}
-    </div>
+    <Masonry breakpointCols={breakpointColumnsObj} className="flex animate-slide-fwd gap-10 relative">
+       {products?.map((product) => <Product key={product.id} {...product} />)}
+    </Masonry>
   );
 };
 
