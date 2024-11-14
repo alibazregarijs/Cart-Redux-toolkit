@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       backgroundColor: {
-        mainColor: "#FBF8F9",
-        secondaryColor: "#F0F0F0",
+        mainColor: "#000000",
+        secondaryColor: "#FF6500",
         blackOverlay: "rgba(0, 0 ,0 ,0.8)",
         blackOverlaySection: "rgba(0, 0 ,0 ,0.6)",
         blackOverlayBackground: "rgba(0, 0 ,0 ,0.3)",
