@@ -1,22 +1,19 @@
-import Product from "./Product";
-export type Product = {
-  id: string;
-  title: string;
-  img: string;
-  price: number;
-  quantity: number;
-  quantityInStore: number;
-  rating?: number;
-  productId?: string;
-};
 
-const ListProduct = ({products}: {products: Product[]}) => {
+import Product from "./Product";
+import Masonry from "react-masonry-css";
+import { type ProductProps } from "../utils/types";
+
+const breakpointColumnsObj = {
+  default: 3,
+  1100: 3,
+  700: 2,
+  500: 1
+};
+const ListProduct = ({products}: {products: ProductProps[]}) => {
   return (
-    <div className="grid grid-cols-3 gap-10">
-      {products.map((product) => (
-        <Product key={product.id} {...product} />
-      ))}
-    </div>
+    <Masonry breakpointCols={breakpointColumnsObj} className="flex animate-slide-fwd gap-10 relative mx-4">
+       {products?.map((product) => <Product key={product.id} {...product} />)}
+    </Masonry>
   );
 };
 

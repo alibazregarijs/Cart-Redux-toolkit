@@ -1,5 +1,5 @@
 
-import { useCartDispatch, useCartSelector } from "../store/hooks";
+import { useCartSelector } from "../store/hooks";
 import MyModal from "./Modal";
 
 const Cart = ({

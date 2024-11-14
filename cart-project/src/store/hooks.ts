@@ -9,8 +9,7 @@ import {
   type DispatchFuntion = () => AppDispatch
   
   export const useCartDispatch: DispatchFuntion = useDispatch
-  export const useRatingDispatch: DispatchFuntion = useDispatch
+  export const useSearchDispatch: DispatchFuntion = useDispatch
 
-  export const useCartSelector: TypedUseSelectorHook<RootState> = useSelector
-  export const useRatingSelector: TypedUseSelectorHook<RootState> = useSelector
-  
+    export const useCartSelector: TypedUseSelectorHook<RootState> = useSelector
+    export const useSearchSelector: TypedUseSelectorHook<RootState> = useSelector

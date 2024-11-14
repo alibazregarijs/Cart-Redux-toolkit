@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import ListProduct, { type Product } from "./ListProduct";
+import ListProduct from "./ListProduct";
 import { fetchFavorite, fetchProduct } from "../api/rating";
+import { type ProductProps } from "../utils/types";
 
 const Favorite = () => {
   const userId = localStorage.getItem?.("userId")?.toString();
-  const [favorite, setFavorite] = useState<Product[]>([]);
+  const [favorite, setFavorite] = useState<ProductProps[]>([]);
 
-  console.log("rendersss")
   useEffect(() => {
     if (userId) {
       fetchFavorite(userId).then((productsIds) => {
-        const uniqueProducts: Product[] = [];
+        const uniqueProducts: ProductProps[] = [];
         productsIds.forEach((id: string) => {
           fetchProduct(id).then((product) => {
             if (!uniqueProducts.some((p) => p.id === product.id)) {
