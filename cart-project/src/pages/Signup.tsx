@@ -59,7 +59,7 @@ export default function Signup() {
       });
 
       localStorage.setItem("userId", userId.toString());
-      navigate("/hero");
+      navigate("/home");
 
     }
   };

@@ -14,7 +14,7 @@ type User = {
   password: string;
 };
 
-export default function Signup() {
+export default function Signin() {
   const navigate = useNavigate();
   const {
     register,
@@ -51,7 +51,7 @@ export default function Signup() {
       });
     } else {
       localStorage.setItem("userId", (user as User).id.toString());
-      navigate("/hero");
+      navigate("/home");
       reset();
     }
   };
