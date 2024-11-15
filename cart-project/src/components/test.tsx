@@ -15,38 +15,46 @@ const Filters = ({
   const newestButtonClickedRef = useRef<boolean>(false);
   const popularButtonClickedRef = useRef<boolean>(false);
 
-
   useEffect(() => {
     if (newestButtonClickedRef.current) {
       setProducts(newestProducts.current);
-    } else if (popularButtonClickedRef.current) {
+    } 
+    else if (popularButtonClickedRef.current) {
+      console.log(popularProducts.current, "popularProducts")
       setProducts(popularProducts.current);
-    } else {
+    }
+    else {
       fetchProductPrice(value, setProducts);
     }
   }, [value]);
 
   const fetchPopularProducts = async () => {
-    const response = await fetch(`http://localhost:8000/products`);
-    const data = await response.json();
-    let averageRating = 0;
+    try {
+      const response = await fetch(`http://localhost:8000/products`);
+      const data = await response.json();
+      let averageRating = 0;
+      
+      data.forEach((product: ProductProps) => {
+        if (product?.quantityOfSell !== undefined) {
+          averageRating += product.quantityOfSell;
+        }
+      });
+      averageRating = averageRating / data.length;
 
-    data.forEach((product: ProductProps) => {
-      if (product?.quantityOfSell !== undefined) {
-        averageRating += product.quantityOfSell;
-      }
-    });
-    averageRating = averageRating / data.length;
+      const filteredPopularProducts = data.filter(
+        (product: ProductProps) =>
+          product?.quantityOfSell && product?.quantityOfSell > averageRating
+      );
 
-    const filteredPopularProducts = data.filter(
-      (product: ProductProps) =>
-        product?.quantityOfSell && product?.quantityOfSell > averageRating
-    );
-    popularButtonClickedRef.current = true;
-    console.log(popularProducts, "popularProducts")
-    popularProducts.current = filteredPopularProducts;
-    setValue([0, 0]);
+      popularProducts.current = filteredPopularProducts;
+      popularButtonClickedRef.current = true;
+      setValue([0, 0]);
+      setProducts(popularProducts.current);
 
+      console.log(popularProducts.current, "popularProducts");
+    } catch (error) {
+      console.error("Error fetching popular products:", error);
+    }
   };
 
   return (
@@ -63,7 +71,6 @@ const Filters = ({
             onChange={(e) => {
               setValue(e as [number, number]);
               newestButtonClickedRef.current = false;
-              popularButtonClickedRef.current = false;
             }}
             className="max-w-md"
           />
@@ -87,7 +94,6 @@ const Filters = ({
               setValue,
               newestProducts,
               newestButtonClickedRef,
-              popularButtonClickedRef,
             })
           }
           className="bg-mainColor text-white"

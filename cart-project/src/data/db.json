@@ -6,8 +6,9 @@
       "price": 350,
       "img": "src/public/images/headphone.jpg",
       "quantity": 1,
-      "quantityInStore": 4,
-      "quantityOfSell": 1
+      "quantityOfSell": 1,
+      "quantityInStore": 4
+
     },
     {
       "id": "2",
@@ -15,8 +16,9 @@
       "price": 500,
       "img": "src/public/images/mouse.jpg",
       "quantity": 2,
-      "quantityInStore": 0,
-      "quantityOfSell": 2
+      "quantityOfSell": 2,
+      "quantityInStore": 0
+
     },
     {
       "id": "3",
@@ -54,7 +56,7 @@
       "countOfSell": 6,
       "CountOfviews": 10,
       "price": 50,
-      "quantityOfSell": 0,
+      "quantityOfSell": 2,
       "quantityInStore": 10
     }
   ],
