@@ -71,8 +71,29 @@ export const fetchProducts = async (
   searchQuery: string,
   setProducts: React.Dispatch<React.SetStateAction<ProductProps[]>>
 ) => {
-  const response = await fetch("http://localhost:8000/products")
+  const response = await fetch("http://localhost:8000/products");
   const data = await response.json();
-  const prods = data.filter((product: ProductProps) => product.title.toLowerCase().includes(searchQuery.toLowerCase()))
-  setProducts(prods)
+  const prods = data.filter((product: ProductProps) =>
+    product.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  setProducts(prods);
+};
+
+export const fetchProductPrice = async (
+  value: [number, number],
+  setProducts: React.Dispatch<React.SetStateAction<ProductProps[]>>,
+
+) => {
+  const response = await fetch(`http://localhost:8000/products`);
+  const data = await response.json();
+
+  if (value[0] === 0 && value[1] === 0) {
+    setProducts(data);
+  } 
+  else {
+    const prods = data.filter(
+      (prod: ProductProps) => prod.price >= value[0] && prod.price <= value[1]
+    );
+    setProducts(prods);
+  }
 };
