@@ -6,8 +6,7 @@ import { addToCart } from "../store/CartSlice";
 import { useRef } from "react";
 import { fetchRatings } from "../api/rating";
 import { handleStarRating } from "../api/rating";
-import "react-toastify/dist/ReactToastify.css";
-import toast, { Toaster } from "react-hot-toast";
+
 
 import {
   Popover,

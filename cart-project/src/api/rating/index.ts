@@ -79,7 +79,7 @@ export const fetchProducts = async (
   setProducts(prods);
 };
 
-export const fetchNewestProducts = async ({setProducts, setValue,newestProducts,newestButtonClickedRef,popularButtonClickedRef}: {setProducts: React.Dispatch<React.SetStateAction<ProductProps[]>>, setValue: React.Dispatch<React.SetStateAction<[number, number]>>, newestProducts: React.MutableRefObject<ProductProps[]>, newestButtonClickedRef: React.MutableRefObject<boolean>, popularButtonClickedRef: React.MutableRefObject<boolean>}) => {
+export const fetchNewestProducts = async ({setProducts, setValue,newestProducts,newestButtonClickedRef}: {setProducts: React.Dispatch<React.SetStateAction<ProductProps[]>>, setValue: React.Dispatch<React.SetStateAction<[number, number]>>, newestProducts: React.MutableRefObject<ProductProps[]>, newestButtonClickedRef: React.MutableRefObject<boolean>}) => {
 
   const response = await fetch(`http://localhost:8000/products`);
   const data = await response.json();
@@ -107,4 +107,27 @@ export const fetchProductPrice = async (
     );
     setProducts(prods);
   }
+};
+
+export const fetchPopularProducts = async ({popularProducts, popularButtonClickedRef, setValue}: {popularProducts: React.MutableRefObject<ProductProps[]>, popularButtonClickedRef: React.MutableRefObject<boolean>, setValue: React.Dispatch<React.SetStateAction<[number, number]>>}) => {
+  const response = await fetch(`http://localhost:8000/products`);
+  const data = await response.json();
+  let averageRating = 0;
+
+  data.forEach((product: ProductProps) => {
+    if (product?.quantityOfSell !== undefined) {
+      averageRating += product.quantityOfSell;
+    }
+  });
+  averageRating = averageRating / data.length;
+
+  const filteredPopularProducts = data.filter(
+    (product: ProductProps) =>
+      product?.quantityOfSell && product?.quantityOfSell > averageRating
+  );
+  popularButtonClickedRef.current = true;
+  console.log(popularProducts, "popularProducts")
+  popularProducts.current = filteredPopularProducts;
+  setValue([0, 0]);
+
 };

@@ -1,7 +1,7 @@
 import { Button, Slider } from "@nextui-org/react";
 import { useState, useEffect, useRef } from "react";
 import { type ProductProps } from "../utils/types";
-import { fetchProductPrice } from "../api/rating";
+import { fetchPopularProducts, fetchProductPrice } from "../api/rating";
 import { fetchNewestProducts } from "../api/rating";
 
 const Filters = ({
@@ -26,28 +26,7 @@ const Filters = ({
     }
   }, [value]);
 
-  const fetchPopularProducts = async () => {
-    const response = await fetch(`http://localhost:8000/products`);
-    const data = await response.json();
-    let averageRating = 0;
-
-    data.forEach((product: ProductProps) => {
-      if (product?.quantityOfSell !== undefined) {
-        averageRating += product.quantityOfSell;
-      }
-    });
-    averageRating = averageRating / data.length;
-
-    const filteredPopularProducts = data.filter(
-      (product: ProductProps) =>
-        product?.quantityOfSell && product?.quantityOfSell > averageRating
-    );
-    popularButtonClickedRef.current = true;
-    console.log(popularProducts, "popularProducts")
-    popularProducts.current = filteredPopularProducts;
-    setValue([0, 0]);
-
-  };
+  
 
   return (
     <div className="flex justify-around w-full items-center gap-10">
@@ -75,7 +54,13 @@ const Filters = ({
       </div>
       <div className="flex justify-center items-center gap-5">
         <Button
-          onClick={fetchPopularProducts}
+          onClick={() =>
+            fetchPopularProducts({
+              popularProducts,
+              popularButtonClickedRef,
+              setValue,
+            })
+          }
           className="bg-secondaryColor text-black"
         >
           Popular
@@ -87,7 +72,6 @@ const Filters = ({
               setValue,
               newestProducts,
               newestButtonClickedRef,
-              popularButtonClickedRef,
             })
           }
           className="bg-mainColor text-white"
