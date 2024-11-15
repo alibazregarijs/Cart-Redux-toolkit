@@ -15,7 +15,6 @@ const Filters = ({
   const newestButtonClickedRef = useRef<boolean>(false);
   const popularButtonClickedRef = useRef<boolean>(false);
 
-
   useEffect(() => {
     if (newestButtonClickedRef.current) {
       setProducts(newestProducts.current);
@@ -25,8 +24,6 @@ const Filters = ({
       fetchProductPrice(value, setProducts);
     }
   }, [value]);
-
-  
 
   return (
     <div className="flex justify-around w-full items-center gap-10">

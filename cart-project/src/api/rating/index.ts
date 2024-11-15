@@ -126,7 +126,6 @@ export const fetchPopularProducts = async ({popularProducts, popularButtonClicke
       product?.quantityOfSell && product?.quantityOfSell > averageRating
   );
   popularButtonClickedRef.current = true;
-  console.log(popularProducts, "popularProducts")
   popularProducts.current = filteredPopularProducts;
   setValue([0, 0]);
 
