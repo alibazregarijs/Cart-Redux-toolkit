@@ -85,6 +85,7 @@ export const fetchNewestProducts = async ({setProducts, setValue,newestProducts,
   const data = await response.json();
   newestProducts.current = data.slice(-3);
   newestButtonClickedRef.current = true;
+  
   setValue([0, 0]);
   setProducts(newestProducts.current);
 };
@@ -109,7 +110,8 @@ export const fetchProductPrice = async (
   }
 };
 
-export const fetchPopularProducts = async ({popularProducts, popularButtonClickedRef, setValue}: {popularProducts: React.MutableRefObject<ProductProps[]>, popularButtonClickedRef: React.MutableRefObject<boolean>, setValue: React.Dispatch<React.SetStateAction<[number, number]>>}) => {
+export const fetchPopularProducts = async ({popularProducts, popularButtonClickedRef, setValue, newestButtonClickedRef}: {popularProducts: React.MutableRefObject<ProductProps[]>, popularButtonClickedRef: React.MutableRefObject<boolean>, setValue: React.Dispatch<React.SetStateAction<[number, number]>>, newestButtonClickedRef: React.MutableRefObject<boolean>}) => {
+  newestButtonClickedRef.current = false;
   const response = await fetch(`http://localhost:8000/products`);
   const data = await response.json();
   let averageRating = 0;

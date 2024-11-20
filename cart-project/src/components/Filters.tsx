@@ -56,6 +56,7 @@ const Filters = ({
               popularProducts,
               popularButtonClickedRef,
               setValue,
+              newestButtonClickedRef,
             })
           }
           className="bg-secondaryColor text-black"

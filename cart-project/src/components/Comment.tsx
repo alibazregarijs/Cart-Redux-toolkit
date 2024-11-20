@@ -1,10 +1,12 @@
 import { Category2, DirectRight, Like } from "iconsax-react";
-import { Accordion, AccordionItem, Avatar } from "@nextui-org/react";
+import { Accordion, AccordionItem, Avatar, Button } from "@nextui-org/react";
 import { AnchorIcon } from "../public/svg/Anchor";
 import { useState } from "react";
+import { Textarea } from "@nextui-org/react";
 
 const Comment = () => {
   const [like, setLike] = useState(false);
+  const [reply, setReply] = useState(false);
 
   return (
     <div className="mx-20 mt-10">
@@ -55,6 +57,7 @@ const Comment = () => {
                     size="25"
                     className="text-secondaryColor cursor-pointer"
                     variant="Bold"
+                    onClick={() => setReply(!reply)}
                   />
                   <Like
                     size="32"
@@ -63,6 +66,16 @@ const Comment = () => {
                     variant={like ? "Bold" : "Outline"}
                   />
                 </div>
+                {reply && (
+                  <div className="">
+                    <div className="flex flex-col items-center">
+                      <Textarea placeholder="Write your reply..." />
+                    </div>
+                    <div className="mt-3">
+                      <Button>Send</Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
