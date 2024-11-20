@@ -3,26 +3,30 @@
     {
       "id": "1",
       "title": "headphone",
-      "countOfSell": 1,
-      "img": "src/public/images/headphone.jpg",
-      "CountOfviews": 3,
       "price": 350,
-      "quantityInStore": 5
+      "img": "src/public/images/headphone.jpg",
+      "quantity": 1,
+      "quantityOfSell": 1,
+      "quantityInStore": 4
+
     },
     {
       "id": "2",
       "title": "mouse",
-      "price": 150,
+      "price": 500,
       "img": "src/public/images/mouse.jpg",
-      "quantity": 1,
-      "quantityInStore": 1
+      "quantity": 2,
+      "quantityOfSell": 2,
+      "quantityInStore": 0
+
     },
     {
       "id": "3",
       "title": "keyboard",
-      "price": 150,
+      "price": 100,
       "img": "src/public/images/keyboard.jpg",
       "quantity": 2,
+      "quantityOfSell": 0,
       "quantityInStore": 4
     },
     {
@@ -31,7 +35,8 @@
       "img": "src/public/images/laptop.jpg",
       "countOfSell": 6,
       "CountOfviews": 10,
-      "price": 150,
+      "price": 700,
+      "quantityOfSell": 0,
       "quantityInStore": 10
     },
     {
@@ -40,7 +45,8 @@
       "img": "src/public/images/mic.jpg",
       "countOfSell": 6,
       "CountOfviews": 10,
-      "price": 150,
+      "price": 250,
+      "quantityOfSell": 0,
       "quantityInStore": 10
     },
     {
@@ -49,7 +55,8 @@
       "img": "src/public/images/speaker.jpg",
       "countOfSell": 6,
       "CountOfviews": 10,
-      "price": 150,
+      "price": 50,
+      "quantityOfSell": 2,
       "quantityInStore": 10
     }
   ],
@@ -195,7 +202,7 @@
       "id": "4",
       "userId": "17",
       "productId": "2",
-      "rating": 2
+      "rating": 3
     },
     {
       "id": "5",

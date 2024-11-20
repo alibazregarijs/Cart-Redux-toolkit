@@ -71,8 +71,62 @@ export const fetchProducts = async (
   searchQuery: string,
   setProducts: React.Dispatch<React.SetStateAction<ProductProps[]>>
 ) => {
-  const response = await fetch("http://localhost:8000/products")
+  const response = await fetch("http://localhost:8000/products");
   const data = await response.json();
-  const prods = data.filter((product: ProductProps) => product.title.toLowerCase().includes(searchQuery.toLowerCase()))
-  setProducts(prods)
+  const prods = data.filter((product: ProductProps) =>
+    product.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  setProducts(prods);
+};
+
+export const fetchNewestProducts = async ({setProducts, setValue,newestProducts,newestButtonClickedRef}: {setProducts: React.Dispatch<React.SetStateAction<ProductProps[]>>, setValue: React.Dispatch<React.SetStateAction<[number, number]>>, newestProducts: React.MutableRefObject<ProductProps[]>, newestButtonClickedRef: React.MutableRefObject<boolean>}) => {
+
+  const response = await fetch(`http://localhost:8000/products`);
+  const data = await response.json();
+  newestProducts.current = data.slice(-3);
+  newestButtonClickedRef.current = true;
+  setValue([0, 0]);
+  setProducts(newestProducts.current);
+};
+
+export const fetchProductPrice = async (
+  value: [number, number],
+  setProducts: React.Dispatch<React.SetStateAction<ProductProps[]>>,
+
+
+) => {
+  const response = await fetch(`http://localhost:8000/products`);
+  const data = await response.json();
+
+  if (value[0] === 0 && value[1] === 0) {
+    setProducts(data);
+  } 
+  else {
+    const prods = data.filter(
+      (prod: ProductProps) => prod.price >= value[0] && prod.price <= value[1]
+    );
+    setProducts(prods);
+  }
+};
+
+export const fetchPopularProducts = async ({popularProducts, popularButtonClickedRef, setValue}: {popularProducts: React.MutableRefObject<ProductProps[]>, popularButtonClickedRef: React.MutableRefObject<boolean>, setValue: React.Dispatch<React.SetStateAction<[number, number]>>}) => {
+  const response = await fetch(`http://localhost:8000/products`);
+  const data = await response.json();
+  let averageRating = 0;
+
+  data.forEach((product: ProductProps) => {
+    if (product?.quantityOfSell !== undefined) {
+      averageRating += product.quantityOfSell;
+    }
+  });
+  averageRating = averageRating / data.length;
+
+  const filteredPopularProducts = data.filter(
+    (product: ProductProps) =>
+      product?.quantityOfSell && product?.quantityOfSell > averageRating
+  );
+  popularButtonClickedRef.current = true;
+  popularProducts.current = filteredPopularProducts;
+  setValue([0, 0]);
+
 };

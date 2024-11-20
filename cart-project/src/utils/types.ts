@@ -7,4 +7,5 @@ export type ProductProps = {
     quantityInStore: number;
     rating?: number;
     productId?: string;
+    quantityOfSell?: number;
   };
