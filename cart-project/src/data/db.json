@@ -8,7 +8,6 @@
       "quantity": 1,
       "quantityOfSell": 1,
       "quantityInStore": 4
-
     },
     {
       "id": "2",
@@ -18,7 +17,6 @@
       "quantity": 2,
       "quantityOfSell": 2,
       "quantityInStore": 0
-
     },
     {
       "id": "3",
@@ -177,6 +175,13 @@
       "password": "5284592257",
       "confirmPassword": "alibazregari",
       "username": "alibazregari"
+    },
+    {
+      "id": "18",
+      "email": "goh@gmail.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "goh"
     }
   ],
   "rating": [
@@ -222,15 +227,22 @@
       "id": "1",
       "userId": "1",
       "productId": "1",
-      "likes":"1",
+      "likes": "1",
       "comment": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptatibus a neque illo odio! Obcaecati cumque quod voluptate magnam vel, dolore commodi, laudantium expedita saepe voluptas reiciendis officiis, sint consequatur?"
     }
   ],
-  "commentLiked":[
+  "commentLiked": [
     {
-      "id":"1",
-      "userId":"1",
-      "commentId":"1"
+      "id": "1",
+      "userId": "c70a",
+      "commentId": "1",
+      "like": "true"
+    },
+    {
+      "id": "2",
+      "userId": "18",
+      "commentId": "1",
+      "like": "true"
     }
   ]
 }

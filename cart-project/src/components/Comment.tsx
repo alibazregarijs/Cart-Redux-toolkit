@@ -1,5 +1,5 @@
 import { Category2, DirectRight, Like } from "iconsax-react";
-import { Accordion, AccordionItem, Avatar, Button } from "@nextui-org/react";
+import { Accordion, AccordionItem, Avatar, Button, user } from "@nextui-org/react";
 import { AnchorIcon } from "../public/svg/Anchor";
 import { useState, useRef, useEffect } from "react";
 import { Textarea } from "@nextui-org/react";
@@ -7,11 +7,11 @@ import { CommentProps } from "./ListComment";
 import { UserProps } from "../utils/types";
 
 const Comment = ({ comment }: { comment: CommentProps }) => {
-  const [like, setLike] = useState(false);
   const [replyButtonClicked, setReplyButtonClicked] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const userCommented = useRef<UserProps>();
+  const [userCommented, setUserCommented] = useState<UserProps>()
   const [commentLiked, setCommentLiked] = useState(false);
+  const userId = localStorage.getItem('userId')
 
   useEffect(() => {
     if (replyButtonClicked && textareaRef.current) {
@@ -22,16 +22,76 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
   const fetchUserAndLike = async () => {
     // getting user and like of every comment
     const response = await fetch(
-      `http://localhost:8000/users/${comment.userId}`
+      `http://localhost:8000/users/${userId}`
     );
     const data = await response.json();
-    userCommented.current = data;
+    setUserCommented(data);
     const res = await fetch(
-      `http://localhost:8000/commentLiked?userId=${userCommented.current?.id}&commentId=${comment.id}`
+      `http://localhost:8000/commentLiked?userId=${userId}&commentId=${comment.id}`
     );
     const info = await res.json();
-    setCommentLiked(info.length > 0 ? true : false);
+    if(info.length){
+      const like = info[0].like === "true" ? true : false
+      setCommentLiked(like);
+    }
   };
+
+  const handleLike = async ({ commentId }: { commentId: string }) => {
+    console.log(commentLiked,"commentLiked")
+    
+
+    try {
+      const checkLikeExist = await fetch(`http://localhost:8000/commentLiked?userId=${userId}&commentId=${commentId}`)
+      const data = await checkLikeExist.json()
+      const response = await fetch(`http://localhost:8000/commentLiked`)
+      const allOfCommentLikedData = await response.json()
+      
+      const updatedData = {
+        id:commentId,
+        userId:userId,
+        commentId:commentId,
+        like:!commentLiked ? "true" : "false"
+      }
+
+      if(!data.length){
+        const updatedData = {
+          id:allOfCommentLikedData.length + 1,
+          userId:userId,
+          commentId:commentId,
+          like:!commentLiked ? "true" : "false"
+        }
+        console.log("dataaaaaaaaaaaa")
+        const response = await fetch(`http://localhost:8000/commentLiked`, {
+          method: "POST",
+          body: JSON.stringify(updatedData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if(response.ok){
+          setCommentLiked(true)
+        }
+      }
+      else{
+        const response = await fetch(`http://localhost:8000/commentLiked/${data[0].id}`, {
+          method: "PUT",
+        body: JSON.stringify(updatedData),
+        headers: {
+          "Content-Type": "application/json",
+          },
+        });
+        if(response.ok){
+          setCommentLiked(!commentLiked)
+        }
+      }
+
+      
+      
+    } catch (error) {
+      console.error('Error during PUT request:', error);
+    }
+  };
+
 
   useEffect(() => {
     fetchUserAndLike();
@@ -64,7 +124,7 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
             <div className="flex w-full justify-center items-center gap-4">
               <div className="flex border w-full flex-col justify-end gap-4 space-x-10  rounded-lg p-4">
                 <p className="text-gray-400">
-                  {userCommented.current?.username}
+                  {userCommented?.username}
                 </p>
                 <p>{comment.comment}</p>
                 <div className="flex items-center gap-4">
@@ -76,7 +136,11 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
                   />
                   <Like
                     size="32"
-                    onClick={() => setLike(!like)}
+                    onClick={() => {
+                      if (userId) {
+                        handleLike({ commentId: comment.id});
+                      }
+                    }}
                     className="text-secondaryColor cursor-pointer"
                     variant={commentLiked ? "Bold" : "Outline"}
                   />
