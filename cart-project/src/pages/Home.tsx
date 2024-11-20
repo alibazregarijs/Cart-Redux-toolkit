@@ -1,6 +1,6 @@
 import NavBar from "../components/NavBar";
 import Hero from "../components/Hero";
-import Comment from "../components/Comment";
+import ListComment from "../components/ListComment";
 const Home = () => {
   return (
     <div>
@@ -9,7 +9,7 @@ const Home = () => {
       </div>
       <div className="w-full mt-20">
         <Hero />
-        <Comment />
+        <ListComment />
       </div>
     </div>
   );

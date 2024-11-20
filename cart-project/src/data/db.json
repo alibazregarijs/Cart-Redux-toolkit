@@ -65,7 +65,7 @@
       "id": "1",
       "email": "test@test.com",
       "password": "test1234",
-      "username": "test"
+      "username": "Ali Bazregari"
     },
     {
       "id": "2",
@@ -215,6 +215,22 @@
       "userId": "17",
       "productId": "1",
       "rating": 5
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "userId": "1",
+      "productId": "1",
+      "likes":"1",
+      "comment": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptatibus a neque illo odio! Obcaecati cumque quod voluptate magnam vel, dolore commodi, laudantium expedita saepe voluptas reiciendis officiis, sint consequatur?"
+    }
+  ],
+  "commentLiked":[
+    {
+      "id":"1",
+      "userId":"1",
+      "commentId":"1"
     }
   ]
 }

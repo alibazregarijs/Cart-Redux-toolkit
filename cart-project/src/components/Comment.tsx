@@ -1,12 +1,41 @@
 import { Category2, DirectRight, Like } from "iconsax-react";
 import { Accordion, AccordionItem, Avatar, Button } from "@nextui-org/react";
 import { AnchorIcon } from "../public/svg/Anchor";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Textarea } from "@nextui-org/react";
+import { CommentProps } from "./ListComment";
+import { UserProps } from "../utils/types";
 
-const Comment = () => {
+const Comment = ({ comment }: { comment: CommentProps }) => {
   const [like, setLike] = useState(false);
-  const [reply, setReply] = useState(false);
+  const [replyButtonClicked, setReplyButtonClicked] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const userCommented = useRef<UserProps>();
+  const [commentLiked, setCommentLiked] = useState(false);
+
+  useEffect(() => {
+    if (replyButtonClicked && textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [replyButtonClicked]);
+
+  const fetchUserAndLike = async () => {
+    // getting user and like of every comment
+    const response = await fetch(
+      `http://localhost:8000/users/${comment.userId}`
+    );
+    const data = await response.json();
+    userCommented.current = data;
+    const res = await fetch(
+      `http://localhost:8000/commentLiked?userId=${userCommented.current?.id}&commentId=${comment.id}`
+    );
+    const info = await res.json();
+    setCommentLiked(info.length > 0 ? true : false);
+  };
+
+  useEffect(() => {
+    fetchUserAndLike();
+  }, []);
 
   return (
     <div className="mx-20 mt-10">
@@ -32,47 +61,38 @@ const Comment = () => {
           title="Comments"
         >
           <div className="flex justify-between">
-            <div className="flex justify-center items-center gap-4">
-              <div className="flex flex-col justify-end gap-4 space-x-10 border rounded-lg p-4">
-                <p className="text-gray-400">Ali Bazregari</p>
-
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere molestias placeat reiciendis dicta qui. Veritatis
-                  soluta animi aperiam explicabo perspiciatis ut vitae at fugiat
-                  corporis, quisquam quis voluptates nisi? Numquam repudiandae
-                  quaerat illum eos cum, officiis voluptatibus minima nostrum,
-                  asperiores aperiam cumque, rerum iste assumenda tempora unde
-                  rem repellat ad praesentium quod perferendis nihil illo
-                  maxime! Excepturi minus iure dolorem veritatis id ullam
-                  quidem, quibusdam saepe suscipit in eaque. Consequatur
-                  asperiores ex necessitatibus illo. Rem et facere labore,
-                  quisquam quis doloremque repudiandae quidem deserunt corrupti
-                  quasi cupiditate exercitationem fugit, quibusdam quas quod.
-                  Repellat, error placeat officiis similique modi exercitationem
-                  aliquid.
+            <div className="flex w-full justify-center items-center gap-4">
+              <div className="flex border w-full flex-col justify-end gap-4 space-x-10  rounded-lg p-4">
+                <p className="text-gray-400">
+                  {userCommented.current?.username}
                 </p>
+                <p>{comment.comment}</p>
                 <div className="flex items-center gap-4">
                   <DirectRight
                     size="25"
                     className="text-secondaryColor cursor-pointer"
                     variant="Bold"
-                    onClick={() => setReply(!reply)}
+                    onClick={() => setReplyButtonClicked(!replyButtonClicked)}
                   />
                   <Like
                     size="32"
                     onClick={() => setLike(!like)}
                     className="text-secondaryColor cursor-pointer"
-                    variant={like ? "Bold" : "Outline"}
+                    variant={commentLiked ? "Bold" : "Outline"}
                   />
                 </div>
-                {reply && (
+                {replyButtonClicked && (
                   <div className="">
                     <div className="flex flex-col items-center">
-                      <Textarea placeholder="Write your reply..." />
+                      <Textarea
+                        ref={textareaRef}
+                        placeholder="Write your reply..."
+                      />
                     </div>
                     <div className="mt-3">
-                      <Button>Send</Button>
+                      <Button onClick={() => setReplyButtonClicked(false)}>
+                        Send
+                      </Button>
                     </div>
                   </div>
                 )}
