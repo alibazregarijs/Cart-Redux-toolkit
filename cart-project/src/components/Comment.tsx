@@ -47,23 +47,16 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
       const allOfCommentLikedData = await response.json()
       
       const updatedData = {
-        id:commentId,
+        id:commentId.toString(),
         userId:userId,
         commentId:commentId,
         like:!commentLiked ? "true" : "false"
       }
 
       if(!data.length){
-        const updatedData = {
-          id:allOfCommentLikedData.length + 1,
-          userId:userId,
-          commentId:commentId,
-          like:!commentLiked ? "true" : "false"
-        }
-        console.log("dataaaaaaaaaaaa")
         const response = await fetch(`http://localhost:8000/commentLiked`, {
           method: "POST",
-          body: JSON.stringify(updatedData),
+          body: JSON.stringify({...updatedData,id:(allOfCommentLikedData.length + 1).toString()}),
           headers: {
             "Content-Type": "application/json",
           },
