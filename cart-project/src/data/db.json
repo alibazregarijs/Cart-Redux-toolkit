@@ -34,7 +34,7 @@
       "countOfSell": 6,
       "CountOfviews": 10,
       "price": 700,
-      "quantityOfSell": 4,
+      "quantityOfSell": 0,
       "quantityInStore": 10
     },
     {
@@ -63,7 +63,7 @@
       "id": "1",
       "email": "test@test.com",
       "password": "test1234",
-      "username": "Ali Bazregari"
+      "username": "test"
     },
     {
       "id": "2",
@@ -178,10 +178,10 @@
     },
     {
       "id": "18",
-      "email": "goh@gmail.com",
+      "email": "ggggg@ggg.com",
       "password": "5284592257",
       "confirmPassword": "alibazregari",
-      "username": "goh"
+      "username": "alibazregari"
     }
   ],
   "rating": [
@@ -226,15 +226,20 @@
     {
       "id": "1",
       "userId": "1",
-      "productId": "1",
-      "likes": "1",
-      "comment": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptatibus a neque illo odio! Obcaecati cumque quod voluptate magnam vel, dolore commodi, laudantium expedita saepe voluptas reiciendis officiis, sint consequatur?"
+      "comment": "HELLO THIS IS A COMMENT",
+      "productId": "2"
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "comment": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quae veritatis. Illum ea repudiandae fuga hic quos eveniet odit unde sapiente minima veniam dolorem ipsa itaque amet perferendis esse, iusto fugit excepturi. A rerum animi pariatur explicabo nobis omnis laudantium, blanditiis dolorum eligendi officia suscipit voluptate delectus dolore voluptatum harum.",
+      "productId": "2"
     }
   ],
   "commentLiked": [
     {
       "id": "1",
-      "userId": "c70a",
+      "userId": "1",
       "commentId": "1",
       "like": "true"
     },
@@ -242,6 +247,12 @@
       "id": "2",
       "userId": "18",
       "commentId": "1",
+      "like": "false"
+    },
+    {
+      "id": "3",
+      "userId": "18",
+      "commentId": "2",
       "like": "true"
     }
   ]

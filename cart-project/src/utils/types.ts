@@ -16,3 +16,10 @@ export type UserProps = {
   password: string;
   username: string;
 };
+
+export type CommentProps = {
+  id: string;
+  userId: string;
+  productId: string;
+  comment: string;
+};
