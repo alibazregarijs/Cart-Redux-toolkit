@@ -1,13 +1,12 @@
 import { Image } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { DollarCircle, Star1 } from "iconsax-react";
-import { useCartDispatch, useCartSelector } from "../store/hooks";
+import { DollarCircle, Message, Star1 } from "iconsax-react";
+import { useCommentDispatch, useCartSelector } from "../store/hooks";
 import { addToCart } from "../store/CartSlice";
 import { useRef } from "react";
 import { fetchRatings } from "../api/rating";
 import { handleStarRating } from "../api/rating";
-
-
+import { setCommentQuery } from "../store/CommentSlice";
 import {
   Popover,
   PopoverTrigger,
@@ -35,13 +34,12 @@ const Product = ({
   const [ratings, setRatings] = useState<number>(0);
   const [boldStars, setBoldStars] = useState<boolean[]>(Array(5).fill(false));
   const [error, setError] = useState<string>("");
-
   const userId = localStorage.getItem("userId")?.toString() || "defaultUserId";
 
   const starRef = useRef(0);
   const quantityRef = useRef(0);
 
-  const dispatch = useCartDispatch();
+  const dispatch = useCommentDispatch();
   const product = useCartSelector((state) => state.cart.items).find(
     (item) => item.id === id
   );
@@ -113,15 +111,21 @@ const Product = ({
             }}
             className="absolute top-[-10]  left-0 z-20 right-0 bottom-0 w-full flex items-center justify-between"
           >
+            <div>
+              <Message size="32" variant="Bold" className="text-white cursor-pointer" onClick={() => dispatch(setCommentQuery(id))} />
+            </div>
             <div className="flex items-center justify-center">
               <span className="text-white font-semibold font-mono mx-2 whitespace-nowrap  ">
                 {price}
               </span>
               <DollarCircle size="20" className="text-secondaryColor" />
             </div>
-            <span className="text-white font-semibold font-mono mx-2 whitespace-nowrap">
-              {title}
-            </span>
+
+            <div>
+              <span className="text-white font-semibold font-mono mx-2 whitespace-nowrap">
+                {title}
+              </span>
+            </div>
           </div>
         )}
       </div>

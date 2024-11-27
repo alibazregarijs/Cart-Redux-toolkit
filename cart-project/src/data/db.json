@@ -8,7 +8,6 @@
       "quantity": 1,
       "quantityOfSell": 1,
       "quantityInStore": 4
-
     },
     {
       "id": "2",
@@ -18,7 +17,6 @@
       "quantity": 2,
       "quantityOfSell": 2,
       "quantityInStore": 0
-
     },
     {
       "id": "3",
@@ -177,6 +175,13 @@
       "password": "5284592257",
       "confirmPassword": "alibazregari",
       "username": "alibazregari"
+    },
+    {
+      "id": "18",
+      "email": "ggggg@ggg.com",
+      "password": "5284592257",
+      "confirmPassword": "alibazregari",
+      "username": "alibazregari"
     }
   ],
   "rating": [
@@ -215,6 +220,46 @@
       "userId": "17",
       "productId": "1",
       "rating": 5
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "userId": "1",
+      "comment": "HELLO THIS IS A COMMENT",
+      "productId": "2"
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "comment": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quae veritatis. Illum ea repudiandae fuga hic quos eveniet odit unde sapiente minima veniam dolorem ipsa itaque amet perferendis esse, iusto fugit excepturi. A rerum animi pariatur explicabo nobis omnis laudantium, blanditiis dolorum eligendi officia suscipit voluptate delectus dolore voluptatum harum.",
+      "productId": "2"
+    },
+    {
+      "id": "3",
+      "comment": "this is third comment ",
+      "userId": "18",
+      "productId": "2"
+    }
+  ],
+  "commentLiked": [
+    {
+      "id": "1",
+      "userId": "1",
+      "commentId": "1",
+      "like": "true"
+    },
+    {
+      "id": "2",
+      "userId": "18",
+      "commentId": "1",
+      "like": "false"
+    },
+    {
+      "id": "3",
+      "userId": "18",
+      "commentId": "2",
+      "like": "true"
     }
   ]
 }
