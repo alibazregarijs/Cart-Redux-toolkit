@@ -234,6 +234,12 @@
       "userId": "1",
       "comment": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quae veritatis. Illum ea repudiandae fuga hic quos eveniet odit unde sapiente minima veniam dolorem ipsa itaque amet perferendis esse, iusto fugit excepturi. A rerum animi pariatur explicabo nobis omnis laudantium, blanditiis dolorum eligendi officia suscipit voluptate delectus dolore voluptatum harum.",
       "productId": "2"
+    },
+    {
+      "id": "3",
+      "comment": "this is third comment ",
+      "userId": "18",
+      "productId": "2"
     }
   ],
   "commentLiked": [

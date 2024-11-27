@@ -5,9 +5,9 @@ export type ProductProps = {
   price: number;
   quantity: number;
   quantityInStore: number;
+  quantityOfSell: number;
   rating?: number;
   productId?: string;
-  quantityOfSell?: number;
 };
 
 export type UserProps = {

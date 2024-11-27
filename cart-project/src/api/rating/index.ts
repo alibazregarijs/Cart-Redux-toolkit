@@ -153,9 +153,10 @@ export const fetchPopularProducts = async ({
 };
 
 export const fetchComments = async (
+  productId: string,
   setComments: React.Dispatch<React.SetStateAction<CommentProps[]>>
 ) => {
-  const response = await fetch("http://localhost:8000/comments");
+  const response = await fetch(`http://localhost:8000/comments?productId=${productId}`);
   const data = await response.json();
   setComments(data);
 };
@@ -164,7 +165,8 @@ export const handleSendComment = async (
   commentText: string,
   userId: string,
   setCommentText: React.Dispatch<React.SetStateAction<string>>,
-  setComments: React.Dispatch<React.SetStateAction<CommentProps[]>>
+  setComments: React.Dispatch<React.SetStateAction<CommentProps[]>>,
+  productId: string
 ) => {
   const response = await fetch(`http://localhost:8000/comments`);
   const data = await response.json();
@@ -173,7 +175,7 @@ export const handleSendComment = async (
     id: (data.length + 1).toString(),
     comment: commentText,
     userId: userId,
-    productId: "2",
+    productId: productId,
   };
 
   const res = await fetch(`http://localhost:8000/comments`, {
@@ -185,7 +187,7 @@ export const handleSendComment = async (
   });
   if (res.ok) {
     setCommentText("");
-    fetchComments(setComments);
+    fetchComments(productId, setComments);
   }
 };
 

@@ -11,7 +11,6 @@ const Hero = () => {
   const [products, setProducts] = useState<ProductProps[]>([]);
 
   useEffect(() => {
-    console.log("salam")
     fetchProducts(searchQuery, setProducts);
   }, [searchQuery]);
 
